@@ -2,29 +2,24 @@ import turtle
 from random import choice, randint
 
 
-# region class block
-class block(object):
-    def __init__(self, x, y, hp, turtle3, s_x, s_y):
-        self.x = x
-        self.y = y
-        self.hp = hp
-        self.x = x
-        self.turtle3 = turtle3
-        self.s_x = s_x
-        self.s_y = s_y
+# region blocks
+hp1 = 3
+hp2 = 3
+hp3 = 3
+hp4 = 3
+hp5 = 3
+hp6 = 3
+hp7 = 3
+hp8 = 3
 
-    def place(self):
-        self.turtle3.color("white")
-        self.turtle3.shape("square")
-        self.turtle3.shapesize(self.s_x, self.s_y)
-        self.turtle3.penup()
-        self.turtle3.goto(self.x, self.y)
-
-    def destroy(self, hp):
-        if self.hp == 0:
-            self.turtle3.clear()
-
-
+a = True
+b = True
+c = True
+d = True
+e = True
+f = True
+g = True
+h = True
 # endregion
 # region window
 game = turtle.Screen()
@@ -190,6 +185,22 @@ def move_down_right():
 
 # endregion
 
+block_a = turtle.Turtle()
+block_a.color("white")
+block_a.speed(0)
+block_a.shape("square")
+block_a.shapesize(10, 5)
+block_a.penup()
+block_a.goto(0, 200)
+
+block_b = turtle.Turtle()
+block_b.color("white")
+block_b.speed(0)
+block_b.shape("square")
+block_b.shapesize(10, 5)
+block_b.penup()
+block_b.goto(0, -200)
+
 # region buttons
 game.listen()
 game.onkeypress(move_up_left, "w")
@@ -303,8 +314,38 @@ while True:
     if player_a.ycor() - 50 <= ball2.ycor() <= player_a.ycor() + 50 \
             and player_a.xcor() - 20 <= ball2.xcor() <= player_a.xcor() + 20:
         ball2.dx = -ball2.dx
+    if a:
+        if block_a.ycor() - 100 <= ball2.ycor() <= block_a.ycor() + 100 \
+                and block_a.xcor() - 50 <= ball2.xcor() <= block_a.xcor() + 50:
+            ball2.dx = -ball2.dx
+            hp1 += -1
+    if b:
+        if block_b.ycor() - 100 <= ball2.ycor() <= block_b.ycor() + 100 \
+                and block_b.xcor() - 50 <= ball2.xcor() <= block_b.xcor() + 50:
+            ball2.dx = -ball2.dx
+            hp2 += -1
+    if a:
+        if block_a.ycor() - 100 <= ball.ycor() <= block_a.ycor() + 100 \
+                and block_a.xcor() - 50 <= ball.xcor() <= block_a.xcor() + 50:
+            ball.dx = -ball.dx
+            hp1 += -1
+    if b:
+        if block_b.ycor() - 100 <= ball.ycor() <= block_b.ycor() + 100 \
+                and block_b.xcor() - 50 <= ball.xcor() <= block_b.xcor() + 50:
+            ball.dx = -ball.dx
+            hp2 += -1
+    if a:
+        if hp1 == 0:
+            block_a.reset()
+            a = False
+            block_a.speed(0)
+            block_a.goto(0, 350)
+    if b:
+        if hp2 == 0:
+            block_b.reset()
+            b = False
+            block_b.speed(0)
+            block_b.goto(0, 350)
     # endregion
-
-    
 
 game.mainloop()
