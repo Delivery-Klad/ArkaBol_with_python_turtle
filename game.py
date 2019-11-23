@@ -1,6 +1,31 @@
 import turtle
 from random import choice, randint
 
+
+# region class block
+class block(object):
+    def __init__(self, x, y, hp, turtle3, s_x, s_y):
+        self.x = x
+        self.y = y
+        self.hp = hp
+        self.x = x
+        self.turtle3 = turtle3
+        self.s_x = s_x
+        self.s_y = s_y
+
+    def place(self):
+        self.turtle3.color("white")
+        self.turtle3.shape("square")
+        self.turtle3.shapesize(self.s_x, self.s_y)
+        self.turtle3.penup()
+        self.turtle3.goto(self.x, self.y)
+
+    def destroy(self, hp):
+        if self.hp == 0:
+            self.turtle3.clear()
+
+
+# endregion
 # region window
 game = turtle.Screen()
 game.title("game")
@@ -31,18 +56,18 @@ def heart_builder(turtle2, x, y):
     turtle2.goto(x, y)
     turtle2.pendown()
     turtle2.begin_fill()
-    turtle2.goto(x-10, y)
-    turtle2.goto(x-10, y-5)
-    turtle2.goto(x-15, y-5)
-    turtle2.goto(x-15, y-10)
-    turtle2.goto(x-20, y-10)
-    turtle2.goto(x-20, y-5)
-    turtle2.goto(x-25, y-5)
-    turtle2.goto(x-25, y)
-    turtle2.goto(x-35, y)
-    turtle2.goto(x - 35, y-5)
-    turtle2.goto(x - 40, y-5)
-    turtle2.goto(x - 40, y-15)
+    turtle2.goto(x - 10, y)
+    turtle2.goto(x - 10, y - 5)
+    turtle2.goto(x - 15, y - 5)
+    turtle2.goto(x - 15, y - 10)
+    turtle2.goto(x - 20, y - 10)
+    turtle2.goto(x - 20, y - 5)
+    turtle2.goto(x - 25, y - 5)
+    turtle2.goto(x - 25, y)
+    turtle2.goto(x - 35, y)
+    turtle2.goto(x - 35, y - 5)
+    turtle2.goto(x - 40, y - 5)
+    turtle2.goto(x - 40, y - 15)
     turtle2.goto(x - 35, y - 15)
     turtle2.goto(x - 35, y - 20)
     turtle2.goto(x - 30, y - 20)
@@ -102,18 +127,21 @@ player_b.goto(450, 0)
 ball = turtle.Turtle()
 ball.shape("circle")
 ball.speed(0)
+ball.penup()
 ball.color("black")
+ball.goto(-200, 0)
 ball.dx = choice([-4, -3, -2, 2, 3, 4])
 ball.dy = choice([-4, -3, -2, 2, 3, 4])
-ball.penup()
 
 ball2 = turtle.Turtle()
 ball2.shape("circle")
 ball2.speed(0)
+ball2.penup()
 ball2.color("black")
+ball2.goto(200, 0)
 ball2.dx = choice([-4, -3, -2, 2, 3, 4])
 ball2.dy = choice([-4, -3, -2, 2, 3, 4])
-ball2.penup()
+
 # endregion
 
 # region winner text
@@ -276,5 +304,7 @@ while True:
             and player_a.xcor() - 20 <= ball2.xcor() <= player_a.xcor() + 20:
         ball2.dx = -ball2.dx
     # endregion
+
+    
 
 game.mainloop()
