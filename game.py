@@ -25,6 +25,12 @@ border.end_fill()
 
 # region hearts
 def heart_builder(turtle2, x, y):
+    turtle2.speed(0)
+    turtle2.color("red")
+    turtle2.penup()
+    turtle2.goto(x, y)
+    turtle2.pendown()
+    turtle2.begin_fill()
     turtle2.goto(x-10, y)
     turtle2.goto(x-10, y-5)
     turtle2.goto(x-15, y-5)
@@ -37,50 +43,40 @@ def heart_builder(turtle2, x, y):
     turtle2.goto(x - 35, y-5)
     turtle2.goto(x - 40, y-5)
     turtle2.goto(x - 40, y-15)
+    turtle2.goto(x - 35, y - 15)
+    turtle2.goto(x - 35, y - 20)
+    turtle2.goto(x - 30, y - 20)
+    turtle2.goto(x - 30, y - 25)
+    turtle2.goto(x - 25, y - 25)
+    turtle2.goto(x - 25, y - 30)
+    turtle2.goto(x - 20, y - 30)
+    turtle2.goto(x - 20, y - 35)
+    turtle2.goto(x - 15, y - 35)
+    turtle2.goto(x - 15, y - 30)
+    turtle2.goto(x - 10, y - 30)
+    turtle2.goto(x - 10, y - 25)
+    turtle2.goto(x - 5, y - 25)
+    turtle2.goto(x - 5, y - 20)
+    turtle2.goto(x, y - 20)
+    turtle2.goto(x, y - 15)
+    turtle2.goto(x + 5, y - 15)
+    turtle2.goto(x + 5, y - 5)
+    turtle2.goto(x, y - 5)
+    turtle2.end_fill()
 
 
-heart = turtle.Turtle(visible=False)
-heart.color("red")
-heart.penup()
-heart.goto(-200, 200)
-heart.pendown()
-heart_builder(heart, -200, 200)
-
-heart1 = turtle.Turtle()
-heart1.shape("circle")
-heart1.color("red")
-heart1.penup()
-heart1.goto(-450, 280)
-
-heart2 = turtle.Turtle()
-heart2.shape("circle")
-heart2.color("red")
-heart2.penup()
-heart2.goto(-400, 280)
-
-heart3 = turtle.Turtle()
-heart3.shape("circle")
-heart3.color("red")
-heart3.penup()
-heart3.goto(-350, 280)
-
-heart4 = turtle.Turtle()
-heart4.shape("circle")
-heart4.color("red")
-heart4.penup()
-heart4.goto(450, 280)
-
-heart5 = turtle.Turtle()
-heart5.shape("circle")
-heart5.color("red")
-heart5.penup()
-heart5.goto(400, 280)
-
-heart6 = turtle.Turtle()
-heart6.shape("circle")
-heart6.color("red")
-heart6.penup()
-heart6.goto(350, 280)
+heart1 = turtle.Turtle(visible=False)
+heart_builder(heart1, -450, 280)
+heart2 = turtle.Turtle(visible=False)
+heart_builder(heart2, -400, 280)
+heart3 = turtle.Turtle(visible=False)
+heart_builder(heart3, -350, 280)
+heart4 = turtle.Turtle(visible=False)
+heart_builder(heart4, 490, 280)
+heart5 = turtle.Turtle(visible=False)
+heart_builder(heart5, 440, 280)
+heart6 = turtle.Turtle(visible=False)
+heart_builder(heart6, 390, 280)
 
 border.goto(0, 300)
 border.color("black")
@@ -190,11 +186,11 @@ while True:
     if ball.xcor() >= 490:
         score_b -= -1
         if score_b == 1:
-            heart6.color("gray")
+            heart6.clear()
         elif score_b == 2:
-            heart5.color("gray")
+            heart5.clear()
         elif score_b == 3:
-            heart4.color("gray")
+            heart4.clear()
             ball.color("gray")
             ball2.color("gray")
             player_a.color("gray")
@@ -208,11 +204,11 @@ while True:
     if ball.xcor() <= -490:
         score_a -= -1
         if score_a == 1:
-            heart3.color("gray")
+            heart3.clear()
         elif score_a == 2:
-            heart2.color("gray")
+            heart2.clear()
         elif score_a == 3:
-            heart1.color("gray")
+            heart1.clear()
             ball.color("gray")
             ball2.color("gray")
             player_a.color("gray")
@@ -232,11 +228,11 @@ while True:
     if ball2.xcor() >= 490:
         score_b -= -1
         if score_b == 1:
-            heart6.color("gray")
+            heart6.clear()
         elif score_b == 2:
-            heart5.color("gray")
+            heart5.clear()
         elif score_b == 3:
-            heart4.color("gray")
+            heart4.clear()
             ball.color("gray")
             ball2.color("gray")
             player_a.color("gray")
@@ -248,11 +244,11 @@ while True:
     if ball2.xcor() <= -490:
         score_a -= -1
         if score_a == 1:
-            heart3.color("gray")
+            heart3.clear()
         elif score_a == 2:
-            heart2.color("gray")
+            heart2.clear()
         elif score_a == 3:
-            heart1.color("gray")
+            heart1.clear()
             ball.color("gray")
             ball2.color("gray")
             player_a.color("gray")
