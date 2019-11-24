@@ -19,6 +19,10 @@ e = True
 f = True
 g = True
 h = True
+
+noBlocks = False
+rev_block1 = True
+rev_block2 = True
 # endregion
 # region window
 game = turtle.Screen()
@@ -38,6 +42,8 @@ border.goto(500, -300)
 border.goto(-500, -300)
 border.goto(-500, 300)
 border.end_fill()
+
+global_x = -400
 
 
 # endregion
@@ -146,7 +152,7 @@ score_b = 0
 winner = turtle.Turtle(visible=False)
 winner.color("white")
 winner.penup()
-winner.setposition(0, 0)
+winner.setposition(-250, 0)
 winner.write(score_a, font=FONT)
 winner.clear()
 
@@ -261,11 +267,18 @@ while True:
     ball2.setx(ball2.xcor() + ball2.dx)
     ball2.sety(ball2.ycor() + ball2.dy)
     # region ball
+    if ball2.ycor() + 20 >= ball.ycor() >= ball2.ycor() - 20 and ball2.xcor() + 20 >= ball.xcor() >= ball2.xcor() - 20:
+        if rev_block1:
+            ball.dx = -ball.dx
+            rev_block1 = False
     if ball.ycor() >= 290:
+        rev_block1 = True
         ball.dy = -ball.dy
     if ball.ycor() <= -290:
+        rev_block1 = True
         ball.dy = -ball.dy
     if ball.xcor() >= 490:
+        rev_block1 = True
         score_b -= -1
         if score_b == 1:
             heart6.clear()
@@ -280,10 +293,11 @@ while True:
             winner.penup()
             winner.goto(-500, 0)
             winner.write("player left win", font=FONT)
-        ball.goto(-400, 0)
+        ball.goto(0, 0)
         ball.dx = choice([-4, -3, -2, 2, 3, 4])
         ball.dy = choice([-4, -3, -2, 2, 3, 4])
     if ball.xcor() <= -490:
+        rev_block1 = True
         score_a -= -1
         if score_a == 1:
             heart3.clear()
@@ -298,16 +312,23 @@ while True:
             winner.penup()
             winner.goto(0, 0)
             winner.write("player right win", font=FONT)
-        ball.goto(-400, 0)
+        ball.goto(0, 0)
         ball.dx = choice([-4, -3, -2, 2, 3, 4])
         ball.dy = choice([-4, -3, -2, 2, 3, 4])
     # endregion
     # region ball2
+    if ball.ycor() + 20 >= ball2.ycor() >= ball.ycor() - 20 and ball.xcor() + 20 >= ball2.xcor() >= ball.xcor() - 20:
+        if rev_block2:
+            ball2.dx = -ball2.dx
+            rev_block2 = False
     if ball2.ycor() >= 290:
+        rev_block2 = True
         ball2.dy = -ball2.dy
     if ball2.ycor() <= -290:
+        rev_block2 = True
         ball2.dy = -ball2.dy
     if ball2.xcor() >= 490:
+        rev_block2 = True
         score_b -= -1
         if score_b == 1:
             heart6.clear()
@@ -320,10 +341,11 @@ while True:
             player_a.color("gray")
             player_b.color("gray")
             winner.write("player left win", font=FONT)
-        ball2.goto(400, 0)
+        ball2.goto(0, 0)
         ball2.dx = choice([-4, -3, -2, 2, 3, 4])
         ball2.dy = choice([-4, -3, -2, 2, 3, 4])
     if ball2.xcor() <= -490:
+        rev_block2 = True
         score_a -= -1
         if score_a == 1:
             heart3.clear()
@@ -336,7 +358,7 @@ while True:
             player_a.color("gray")
             player_b.color("gray")
             winner.write("player right win", font=FONT)
-        ball2.goto(400, 0)
+        ball2.goto(0, 0)
         ball2.dx = choice([-4, -3, -2, 2, 3, 4])
         ball2.dy = choice([-4, -3, -2, 2, 3, 4])
     # endregion
@@ -357,91 +379,95 @@ while True:
     if player_a.ycor() - 50 <= ball2.ycor() <= player_a.ycor() + 50 \
             and player_a.xcor() - 20 <= ball2.xcor() <= player_a.xcor() + 20:
         ball2.dx = -ball2.dx
+
+    # endregion
+
+    # region hp
     if a:
         if block_a.ycor() - 120 <= ball2.ycor() <= block_a.ycor() + 120 \
                 and block_a.xcor() - 60 <= ball2.xcor() <= block_a.xcor() + 60:
             ball2.dx = -ball2.dx
             hp1 += -1
-            print(hp1)
+            print(hp1, noBlocks)
     if b:
         if block_b.ycor() - 120 <= ball2.ycor() <= block_b.ycor() + 120 \
                 and block_b.xcor() - 60 <= ball2.xcor() <= block_b.xcor() + 60:
             ball2.dx = -ball2.dx
             hp2 += -1
-            print(hp2)
+            print(hp2, noBlocks)
     if c:
         if block_c.ycor() - 50 <= ball2.ycor() <= block_c.ycor() + 50 \
                 and block_c.xcor() - 110 <= ball2.xcor() <= block_c.xcor() + 110:
             ball2.dx = -ball2.dx
             hp3 += -1
-            print(hp3)
+            print(hp3, noBlocks)
     if d:
         if block_d.ycor() - 70 <= ball2.ycor() <= block_d.ycor() + 70 \
                 and block_d.xcor() - 35 <= ball2.xcor() <= block_d.xcor() + 35:
             ball2.dx = -ball2.dx
             hp4 += -1
-            print(hp4)
+            print(hp4, noBlocks)
     if e:
         if block_e.ycor() - 70 <= ball2.ycor() <= block_e.ycor() + 70 \
                 and block_e.xcor() - 35 <= ball2.xcor() <= block_e.xcor() + 35:
             ball2.dx = -ball2.dx
             hp5 += -1
-            print(hp5)
+            print(hp5, noBlocks)
     if f:
         if block_f.ycor() - 70 <= ball2.ycor() <= block_f.ycor() + 70 \
                 and block_f.xcor() - 35 <= ball2.xcor() <= block_f.xcor() + 35:
             ball2.dx = -ball2.dx
             hp6 += -1
-            print(hp6)
+            print(hp6, noBlocks)
     if g:
         if block_g.ycor() - 70 <= ball2.ycor() <= block_g.ycor() + 70 \
                 and block_g.xcor() - 35 <= ball2.xcor() <= block_g.xcor() + 35:
             ball2.dx = -ball2.dx
             hp7 += -1
-            print(hp7)
+            print(hp7, noBlocks)
 
     if a:
         if block_a.ycor() - 120 <= ball.ycor() <= block_a.ycor() + 120 \
                 and block_a.xcor() - 60 <= ball.xcor() <= block_a.xcor() + 60:
             ball.dx = -ball.dx
             hp1 += -1
-            print(hp1)
+            print(hp1, noBlocks)
     if b:
         if block_b.ycor() - 120 <= ball.ycor() <= block_b.ycor() + 120 \
                 and block_b.xcor() - 60 <= ball.xcor() <= block_b.xcor() + 60:
             ball.dx = -ball.dx
             hp2 += -1
-            print(hp2)
+            print(hp2, noBlocks)
     if c:
         if block_c.ycor() - 50 <= ball.ycor() <= block_c.ycor() + 50 \
                 and block_c.xcor() - 110 <= ball.xcor() <= block_c.xcor() + 110:
             ball.dx = -ball.dx
             hp3 += -1
-            print(hp3)
+            print(hp3, noBlocks)
     if d:
         if block_d.ycor() - 70 <= ball.ycor() <= block_d.ycor() + 70 \
                 and block_d.xcor() - 35 <= ball.xcor() <= block_d.xcor() + 35:
             ball.dx = -ball.dx
             hp4 += -1
-            print(hp4)
+            print(hp4, noBlocks)
     if e:
         if block_e.ycor() - 70 <= ball.ycor() <= block_e.ycor() + 70 \
                 and block_e.xcor() - 35 <= ball.xcor() <= block_e.xcor() + 35:
             ball.dx = -ball.dx
             hp5 += -1
-            print(hp5)
+            print(hp5, noBlocks)
     if f:
         if block_f.ycor() - 70 <= ball.ycor() <= block_f.ycor() + 70 \
                 and block_f.xcor() - 35 <= ball.xcor() <= block_f.xcor() + 35:
             ball.dx = -ball.dx
             hp6 += -1
-            print(hp6)
+            print(hp6, noBlocks)
     if g:
         if block_g.ycor() - 70 <= ball.ycor() <= block_g.ycor() + 70 \
                 and block_g.xcor() - 35 <= ball.xcor() <= block_g.xcor() + 35:
             ball.dx = -ball.dx
             hp7 += -1
-            print(hp7)
+            print(hp7, noBlocks)
     if a:
         if hp1 == 0:
             block_a.reset()
@@ -485,5 +511,7 @@ while True:
             block_g.speed(0)
             block_g.goto(0, 350)
     # endregion
+    if hp1 == 0 and hp2 == 0 and hp1 == 3 and hp4 == 0 and hp5 == 0 and hp6 == 0 and hp7 == 0 and hp8 == 0:
+        noBlocks = True
 
 game.mainloop()
