@@ -1,51 +1,33 @@
 import turtle
-from random import choice, randint
+from random import choice
 
 # region blocks
-hp1 = 3
-hp2 = 3
-hp3 = 3
-hp4 = 3
-hp5 = 3
-hp6 = 3
-hp7 = 3
-hp8 = 3
-
-a = True
-b = True
-c = True
-d = True
-e = True
-f = True
-g = True
-h = True
-
+HP = [3, 3, 3, 3, 3, 3, 3, 0]
+destroys = [True, True, True, True, True, True, True, True]
 noBlocks = False
 rev_block1 = True
 rev_block2 = True
 # endregion
 # region window
 game = turtle.Screen()
-game.title("game")
+game.title("ArkaBol")
 game.setup(width=1.0, height=1.0)
 game.bgcolor("black")
 game.tracer(1)
 
-border = turtle.Turtle()
-border.speed(0)
-border.color("gray")
+zone = turtle.Turtle()
+zone.speed(0)
+zone.color("gray")
 
-border.begin_fill()
-border.goto(-500, 300)
-border.goto(500, 300)
-border.goto(500, -300)
-border.goto(-500, -300)
-border.goto(-500, 300)
-border.end_fill()
+zone.begin_fill()
+zone.goto(-500, 300)
+zone.goto(500, 300)
+zone.goto(500, -300)
+zone.goto(-500, -300)
+zone.goto(-500, 300)
+zone.end_fill()
 
 global_x = -400
-
-
 # endregion
 
 # region hearts
@@ -103,10 +85,10 @@ heart_builder(heart5, 440, 280)
 heart6 = turtle.Turtle(visible=False)
 heart_builder(heart6, 390, 280)
 
-border.goto(0, 300)
-border.color("black")
-border.goto(0, -300)
-border.hideturtle()
+zone.goto(0, 300)
+zone.color("black")
+zone.goto(0, -300)
+zone.hideturtle()
 
 player_a = turtle.Turtle()
 player_a.color("white")
@@ -141,7 +123,6 @@ ball2.color("black")
 ball2.goto(400, 0)
 ball2.dx = choice([-4, -3, -2, 2, 3, 4])
 ball2.dy = choice([-4, -3, -2, 2, 3, 4])
-
 # endregion
 
 # region winner text
@@ -155,8 +136,6 @@ winner.penup()
 winner.setposition(-250, 0)
 winner.write(score_a, font=FONT)
 winner.clear()
-
-
 # endregion
 
 # region button func
@@ -186,8 +165,6 @@ def move_down_right():
     if y < -240:
         y = -240
     player_b.sety(y - 10)
-
-
 # endregion
 
 # region big blocks
@@ -379,139 +356,138 @@ while True:
     if player_a.ycor() - 50 <= ball2.ycor() <= player_a.ycor() + 50 \
             and player_a.xcor() - 20 <= ball2.xcor() <= player_a.xcor() + 20:
         ball2.dx = -ball2.dx
-
     # endregion
 
     # region hp
-    if a:
+    if destroys[0]:
         if block_a.ycor() - 120 <= ball2.ycor() <= block_a.ycor() + 120 \
                 and block_a.xcor() - 60 <= ball2.xcor() <= block_a.xcor() + 60:
             ball2.dx = -ball2.dx
-            hp1 += -1
-            print(hp1, noBlocks)
-    if b:
+            HP[0] += -1
+            print(HP[0], noBlocks)
+    if destroys[1]:
         if block_b.ycor() - 120 <= ball2.ycor() <= block_b.ycor() + 120 \
                 and block_b.xcor() - 60 <= ball2.xcor() <= block_b.xcor() + 60:
             ball2.dx = -ball2.dx
-            hp2 += -1
-            print(hp2, noBlocks)
-    if c:
+            HP[1] += -1
+            print(HP[1], noBlocks)
+    if destroys[2]:
         if block_c.ycor() - 50 <= ball2.ycor() <= block_c.ycor() + 50 \
                 and block_c.xcor() - 110 <= ball2.xcor() <= block_c.xcor() + 110:
             ball2.dx = -ball2.dx
-            hp3 += -1
-            print(hp3, noBlocks)
-    if d:
+            HP[2] += -1
+            print(HP[2], noBlocks)
+    if destroys[3]:
         if block_d.ycor() - 70 <= ball2.ycor() <= block_d.ycor() + 70 \
                 and block_d.xcor() - 35 <= ball2.xcor() <= block_d.xcor() + 35:
             ball2.dx = -ball2.dx
-            hp4 += -1
-            print(hp4, noBlocks)
-    if e:
+            HP[3] += -1
+            print(HP[3], noBlocks)
+    if destroys[4]:
         if block_e.ycor() - 70 <= ball2.ycor() <= block_e.ycor() + 70 \
                 and block_e.xcor() - 35 <= ball2.xcor() <= block_e.xcor() + 35:
             ball2.dx = -ball2.dx
-            hp5 += -1
-            print(hp5, noBlocks)
-    if f:
+            HP[4] += -1
+            print(HP[4], noBlocks)
+    if destroys[5]:
         if block_f.ycor() - 70 <= ball2.ycor() <= block_f.ycor() + 70 \
                 and block_f.xcor() - 35 <= ball2.xcor() <= block_f.xcor() + 35:
             ball2.dx = -ball2.dx
-            hp6 += -1
-            print(hp6, noBlocks)
-    if g:
+            HP[5] += -1
+            print(HP[5], noBlocks)
+    if destroys[6]:
         if block_g.ycor() - 70 <= ball2.ycor() <= block_g.ycor() + 70 \
                 and block_g.xcor() - 35 <= ball2.xcor() <= block_g.xcor() + 35:
             ball2.dx = -ball2.dx
-            hp7 += -1
-            print(hp7, noBlocks)
-
-    if a:
+            HP[6] += -1
+            print(HP[6], noBlocks)
+    if destroys[0]:
         if block_a.ycor() - 120 <= ball.ycor() <= block_a.ycor() + 120 \
                 and block_a.xcor() - 60 <= ball.xcor() <= block_a.xcor() + 60:
             ball.dx = -ball.dx
-            hp1 += -1
-            print(hp1, noBlocks)
-    if b:
+            HP[0] += -1
+            print(HP[0], noBlocks)
+    if destroys[1]:
         if block_b.ycor() - 120 <= ball.ycor() <= block_b.ycor() + 120 \
                 and block_b.xcor() - 60 <= ball.xcor() <= block_b.xcor() + 60:
             ball.dx = -ball.dx
-            hp2 += -1
-            print(hp2, noBlocks)
-    if c:
+            HP[1] += -1
+            print(HP[1], noBlocks)
+    if destroys[2]:
         if block_c.ycor() - 50 <= ball.ycor() <= block_c.ycor() + 50 \
                 and block_c.xcor() - 110 <= ball.xcor() <= block_c.xcor() + 110:
             ball.dx = -ball.dx
-            hp3 += -1
-            print(hp3, noBlocks)
-    if d:
+            HP[2] += -1
+            print(HP[2], noBlocks)
+    if destroys[3]:
         if block_d.ycor() - 70 <= ball.ycor() <= block_d.ycor() + 70 \
                 and block_d.xcor() - 35 <= ball.xcor() <= block_d.xcor() + 35:
             ball.dx = -ball.dx
-            hp4 += -1
-            print(hp4, noBlocks)
-    if e:
+            HP[3] += -1
+            print(HP[3], noBlocks)
+    if destroys[4]:
         if block_e.ycor() - 70 <= ball.ycor() <= block_e.ycor() + 70 \
                 and block_e.xcor() - 35 <= ball.xcor() <= block_e.xcor() + 35:
             ball.dx = -ball.dx
-            hp5 += -1
-            print(hp5, noBlocks)
-    if f:
+            HP[4] += -1
+            print(HP[4], noBlocks)
+    if destroys[5]:
         if block_f.ycor() - 70 <= ball.ycor() <= block_f.ycor() + 70 \
                 and block_f.xcor() - 35 <= ball.xcor() <= block_f.xcor() + 35:
             ball.dx = -ball.dx
-            hp6 += -1
-            print(hp6, noBlocks)
-    if g:
+            HP[5] += -1
+            print(HP[5], noBlocks)
+    if destroys[6]:
         if block_g.ycor() - 70 <= ball.ycor() <= block_g.ycor() + 70 \
                 and block_g.xcor() - 35 <= ball.xcor() <= block_g.xcor() + 35:
             ball.dx = -ball.dx
-            hp7 += -1
-            print(hp7, noBlocks)
-    if a:
-        if hp1 == 0:
+            HP[6] += -1
+            print(HP[6], noBlocks)
+    if destroys[0]:
+        if HP[0] == 0:
             block_a.reset()
-            a = False
+            destroys[0] = False
             block_a.speed(0)
             block_a.goto(0, 350)
-    if b:
-        if hp2 == 0:
+    if destroys[1]:
+        if HP[1] == 0:
             block_b.reset()
-            b = False
+            destroys[1] = False
             block_b.speed(0)
             block_b.goto(0, 350)
-    if c:
-        if hp3 == 0:
+    if destroys[2]:
+        if HP[2] == 0:
             block_c.reset()
-            c = False
+            destroys[2] = False
             block_c.speed(0)
             block_c.goto(0, 350)
-    if d:
-        if hp4 == 0:
+    if destroys[3]:
+        if HP[3] == 0:
             block_d.color("black")
-            d = False
+            destroys[3] = False
             block_d.speed(0)
             block_d.goto(0, 350)
-    if e:
-        if hp5 == 0:
+    if destroys[4]:
+        if HP[4] == 0:
             block_e.color("black")
-            e = False
+            destroys[4] = False
             block_e.speed(0)
             block_e.goto(0, 350)
-    if f:
-        if hp6 == 0:
+    if destroys[5]:
+        if HP[5] == 0:
             block_f.color("black")
-            f = False
+            destroys[5] = False
             block_f.speed(0)
             block_f.goto(0, 350)
-    if g:
-        if hp7 == 0:
+    if destroys[6]:
+        if HP[6] == 0:
             block_g.color("black")
-            g = False
+            destroys[6] = False
             block_g.speed(0)
             block_g.goto(0, 350)
     # endregion
-    if hp1 == 0 and hp2 == 0 and hp1 == 3 and hp4 == 0 and hp5 == 0 and hp6 == 0 and hp7 == 0 and hp8 == 0:
+    if HP[0] == 0 and HP[1] == 0 and HP[2] == 3 and HP[3] == 0 and HP[4] == 0 and HP[5] == 0 and HP[6] == 0 and HP[
+        7] == 0:
         noBlocks = True
 
 game.mainloop()
