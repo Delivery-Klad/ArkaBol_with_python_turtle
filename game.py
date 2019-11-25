@@ -2,11 +2,21 @@ import turtle
 from random import choice
 
 # region blocks
+block_a = turtle.Turtle()
+block_b = turtle.Turtle()
+block_c = turtle.Turtle()
+block_d = turtle.Turtle()
+block_e = turtle.Turtle()
+block_f = turtle.Turtle()
+block_g = turtle.Turtle()
+block_h = turtle.Turtle()
+blocks = [block_a, block_b, block_c, block_d, block_e, block_f, block_g, block_h]
 HP = [3, 3, 3, 3, 3, 3, 3, 0]
 destroys = [True, True, True, True, True, True, True, True]
 noBlocks = False
 rev_block1 = True
 rev_block2 = True
+global_x = -400
 # endregion
 # region window
 game = turtle.Screen()
@@ -18,7 +28,6 @@ game.tracer(1)
 zone = turtle.Turtle()
 zone.speed(0)
 zone.color("gray")
-
 zone.begin_fill()
 zone.goto(-500, 300)
 zone.goto(500, 300)
@@ -26,8 +35,6 @@ zone.goto(500, -300)
 zone.goto(-500, -300)
 zone.goto(-500, 300)
 zone.end_fill()
-
-global_x = -400
 # endregion
 
 # region hearts
@@ -71,7 +78,6 @@ def heart_builder(turtle2, x, y):
     turtle2.goto(x, y - 5)
     turtle2.end_fill()
 
-
 heart1 = turtle.Turtle(visible=False)
 heart_builder(heart1, -450, 280)
 heart2 = turtle.Turtle(visible=False)
@@ -86,10 +92,9 @@ heart6 = turtle.Turtle(visible=False)
 heart_builder(heart6, 390, 280)
 
 zone.goto(0, 300)
-zone.color("black")
+zone.color("gray")
 zone.goto(0, -300)
 zone.hideturtle()
-
 player_a = turtle.Turtle()
 player_a.color("white")
 player_a.shape("square")
@@ -145,20 +150,17 @@ def move_up_left():
         y = 240
     player_a.sety(y + 10)
 
-
 def move_down_left():
     y = player_a.ycor()
     if y < -240:
         y = -240
     player_a.sety(y - 10)
 
-
 def move_up_right():
     y = player_b.ycor()
     if y > 240:
         y = 240
     player_b.sety(y + 10)
-
 
 def move_down_right():
     y = player_b.ycor()
@@ -167,64 +169,38 @@ def move_down_right():
     player_b.sety(y - 10)
 # endregion
 
-# region big blocks
-block_a = turtle.Turtle()
-block_a.color("white")
-block_a.speed(0)
-block_a.shape("square")
-block_a.shapesize(10, 5)
-block_a.penup()
-block_a.goto(0, 200)
+# region blocks
+for i in range(len(blocks) - 1):
+    blocks[i].color("white")
+    blocks[i].speed(0)
+    blocks[i].shape("square")
+blocks[0].shapesize(10, 5)
+blocks[0].penup()
+blocks[0].goto(0, 200)
 
-block_b = turtle.Turtle()
-block_b.color("white")
-block_b.speed(0)
-block_b.shape("square")
-block_b.shapesize(10, 5)
-block_b.penup()
-block_b.goto(0, -200)
+blocks[1].shapesize(10, 5)
+blocks[1].penup()
+blocks[1].goto(0, -200)
 
-block_c = turtle.Turtle()
-block_c.color("white")
-block_c.speed(0)
-block_c.shape("square")
-block_c.shapesize(5, 10)
-block_c.penup()
-block_c.goto(0, 0)
-# endregion
+blocks[2].shapesize(5, 10)
+blocks[2].penup()
+blocks[2].goto(0, 0)
 
-# region small blocks
-block_d = turtle.Turtle()
-block_d.color("white")
-block_d.speed(0)
-block_d.shape("square")
-block_d.shapesize(4, 2)
-block_d.penup()
-block_d.goto(150, 60)
+blocks[3].shapesize(4, 2)
+blocks[3].penup()
+blocks[3].goto(150, 60)
 
-block_e = turtle.Turtle()
-block_e.color("white")
-block_e.speed(0)
-block_e.shape("square")
-block_e.shapesize(4, 2)
-block_e.penup()
-block_e.goto(-150, 60)
+blocks[4].shapesize(4, 2)
+blocks[4].penup()
+blocks[4].goto(-150, 60)
 
-block_f = turtle.Turtle()
-block_f.color("white")
-block_f.speed(0)
-block_f.shape("square")
-block_f.shapesize(4, 2)
-block_f.penup()
-block_f.goto(-150, -60)
+blocks[5].shapesize(4, 2)
+blocks[5].penup()
+blocks[5].goto(-150, -60)
 
-block_g = turtle.Turtle()
-block_g.color("white")
-block_g.speed(0)
-block_g.shape("square")
-block_g.shapesize(4, 2)
-block_g.penup()
-block_g.goto(150, -60)
+blocks[6].shapesize(4, 2)
+blocks[6].penup()
+blocks[6].goto(150, -60)
 # endregion
 
 # region buttons
@@ -235,7 +211,6 @@ game.onkeypress(move_down_left, "s")
 game.onkeypress(move_up_right, "o")
 game.onkeypress(move_down_right, "l")
 # endregion
-
 while True:
     game.update()
     ball.setx(ball.xcor() + ball.dx)
@@ -443,51 +418,16 @@ while True:
             ball.dx = -ball.dx
             HP[6] += -1
             print(HP[6], noBlocks)
-    if destroys[0]:
-        if HP[0] == 0:
-            block_a.reset()
-            destroys[0] = False
-            block_a.speed(0)
-            block_a.goto(0, 350)
-    if destroys[1]:
-        if HP[1] == 0:
-            block_b.reset()
-            destroys[1] = False
-            block_b.speed(0)
-            block_b.goto(0, 350)
-    if destroys[2]:
-        if HP[2] == 0:
-            block_c.reset()
-            destroys[2] = False
-            block_c.speed(0)
-            block_c.goto(0, 350)
-    if destroys[3]:
-        if HP[3] == 0:
-            block_d.color("black")
-            destroys[3] = False
-            block_d.speed(0)
-            block_d.goto(0, 350)
-    if destroys[4]:
-        if HP[4] == 0:
-            block_e.color("black")
-            destroys[4] = False
-            block_e.speed(0)
-            block_e.goto(0, 350)
-    if destroys[5]:
-        if HP[5] == 0:
-            block_f.color("black")
-            destroys[5] = False
-            block_f.speed(0)
-            block_f.goto(0, 350)
-    if destroys[6]:
-        if HP[6] == 0:
-            block_g.color("black")
-            destroys[6] = False
-            block_g.speed(0)
-            block_g.goto(0, 350)
+    for i in range(len(blocks) - 1):
+        if destroys[i]:
+            if HP[i] == 0:
+                blocks[i].reset()
+                destroys[i] = False
+                blocks[i].speed(0)
+                blocks[i].goto(0, 350)
     # endregion
-    if HP[0] == 0 and HP[1] == 0 and HP[2] == 3 and HP[3] == 0 and HP[4] == 0 and HP[5] == 0 and HP[6] == 0 and HP[
-        7] == 0:
+    if HP[0] == 0 and HP[1] == 0 and HP[2] == 3 and HP[3] == 0 and HP[4] == 0 and HP[5] == 0 and HP[6] == 0 and \
+            HP[7] == 0:
         noBlocks = True
 
 game.mainloop()
