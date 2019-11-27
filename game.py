@@ -83,7 +83,7 @@ winner.setposition(-250, 0)
 winner.write(blocks[11], font=FONT)
 winner.clear()
 # endregion
-# region button func
+# region functions
 def move_up_left():
     y = blocks[9].ycor()
     if y > 240:
@@ -116,8 +116,45 @@ def ballReset(n, x, y):
     blocks[n].goto(x, y)
     blocks[n].dx = choice([-4, -3, -2, 2, 3, 4])
     blocks[n].dy = choice([-4, -3, -2, 2, 3, 4])
-# endregion
-# region blocks
+
+def showWinner(x, y, text):
+    winner.penup()
+    winner.goto(x, y)
+    winner.write(text, font=FONT)
+
+def wallsCollision(num, trigger, checker, cor, ballId, reset):
+    if cor == "y":
+        if blocks[num].ycor() >= trigger or blocks[num].ycor() <= -trigger:
+            checkers[checker] = True
+            blocks[num].dy = -blocks[num].dy
+    elif cor == "x":
+        if blocks[num].xcor() >= trigger:
+            checkers[checker] = True
+            blocks[12] -= -1
+            if blocks[12] == 1:
+                hearts[5].clear()
+            elif blocks[12] == 2:
+                hearts[4].clear()
+            elif blocks[12] == 3:
+                hearts[3].clear()
+                clear()
+                showWinner(-500, 0, "player left win")
+            if reset:
+                ballReset(ballId, 0, 0)
+        if blocks[num].xcor() <= -trigger:
+            checkers[checker] = True
+            blocks[11] -= -1
+            if blocks[11] == 1:
+                hearts[2].clear()
+            elif blocks[11] == 2:
+                hearts[1].clear()
+            elif blocks[11] == 3:
+                hearts[0].clear()
+                clear()
+                showWinner(0, 0, "player right win")
+            if reset:
+                ballReset(ballId, 0, 0)
+                
 def blockBuilder(num, color, x, y, shape, gx, gy, check):
     blocks[num].color(color)
     blocks[num].speed(10)
@@ -129,7 +166,8 @@ def blockBuilder(num, color, x, y, shape, gx, gy, check):
         blocks[num].dy = choice([-4, -3, -2, 2, 3, 4])
     blocks[num].penup()
     blocks[num].goto(gx, gy)
-
+# endregion
+# region blocks
 blockBuilder(0, "white", 10, 5, "square", 0, 200, True)
 blockBuilder(1, "white", 10, 5, "square", 0, -200, True)
 blockBuilder(2, "white", 5, 10, "square", 0, 0, True)
@@ -155,83 +193,23 @@ while True:
     blocks[7].sety(blocks[7].ycor() + blocks[7].dy)
     blocks[8].setx(blocks[8].xcor() + blocks[8].dx)
     blocks[8].sety(blocks[8].ycor() + blocks[8].dy)
-    # region ball
+    # region balls
     if blocks[8].ycor() + 20 >= blocks[7].ycor() >= blocks[8].ycor() - 20 and blocks[8].xcor() + 20 >= \
             blocks[7].xcor() >= blocks[8].xcor() - 20:
         if checkers[1]:
             blocks[7].dx = -blocks[7].dx
             checkers[1] = False
-    if blocks[7].ycor() >= 290:
-        checkers[1] = True
-        blocks[7].dy = -blocks[7].dy
-    if blocks[7].ycor() <= -290:
-        checkers[1] = True
-        blocks[7].dy = -blocks[7].dy
-    if blocks[7].xcor() >= 490:
-        checkers[1] = True
-        blocks[12] -= -1
-        if blocks[12] == 1:
-            hearts[5].clear()
-        elif blocks[12] == 2:
-            hearts[4].clear()
-        elif blocks[12] == 3:
-            hearts[3].clear()
-            clear()
-            winner.penup()
-            winner.goto(-500, 0)
-            winner.write("player left win", font=FONT)
-        ballReset(7, 0, 0)
-    if blocks[7].xcor() <= -490:
-        checkers[1] = True
-        blocks[11] -= -1
-        if blocks[11] == 1:
-            hearts[2].clear()
-        elif blocks[11] == 2:
-            hearts[1].clear()
-        elif blocks[11] == 3:
-            hearts[0].clear()
-            clear()
-            winner.penup()
-            winner.goto(0, 0)
-            winner.write("player right win", font=FONT)
-        ballReset(7, 0, 0)
-    # endregion
-    # region ball2
     if blocks[7].ycor() + 20 >= blocks[8].ycor() >= blocks[7].ycor() - 20 and blocks[7].xcor() + 20 >= \
             blocks[8].xcor() >= blocks[7].xcor() - 20:
         if checkers[2]:
             blocks[8].dx = -blocks[8].dx
             checkers[2] = False
-    if blocks[8].ycor() >= 290:
-        checkers[2] = True
-        blocks[8].dy = -blocks[8].dy
-    if blocks[8].ycor() <= -290:
-        checkers[2] = True
-        blocks[8].dy = -blocks[8].dy
-    if blocks[8].xcor() >= 490:
-        checkers[2] = True
-        blocks[12] -= -1
-        if blocks[12] == 1:
-            hearts[5].clear()
-        elif blocks[12] == 2:
-            hearts[4].clear()
-        elif blocks[12] == 3:
-            hearts[3].clear()
-            clear()
-            winner.write("player left win", font=FONT)
-        ballReset(8, 0, 0)
-    if blocks[8].xcor() <= -490:
-        checkers[2] = True
-        blocks[11] -= -1
-        if blocks[11] == 1:
-            hearts[2].clear()
-        elif blocks[11] == 2:
-            hearts[1].clear()
-        elif blocks[11] == 3:
-            hearts[0].clear()
-            clear()
-            winner.write("player right win", font=FONT)
-        ballReset(8, 0, 0)
+    wallsCollision(7, 290, 1, "y", 7, False)
+    wallsCollision(7, 490, 1, "x", 7, True)
+    wallsCollision(7, 490, 1, "x", 7, True)
+    wallsCollision(8, 290, 2, "y", 8, False)
+    wallsCollision(8, 490, 2, "x", 8, True)
+    wallsCollision(8, 490, 2, "x", 8, True)
     # endregion
     # region beat off
     if blocks[10].ycor() - 60 <= blocks[7].ycor() <= blocks[10].ycor() + 60 \
