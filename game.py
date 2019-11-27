@@ -25,7 +25,6 @@ zone.goto(-500, -300)
 zone.goto(-500, 300)
 zone.end_fill()
 # endregion
-
 # region hearts
 def heart_builder(turtle2, x, y):
     turtle2.speed(0)
@@ -67,18 +66,13 @@ def heart_builder(turtle2, x, y):
     turtle2.goto(x, y - 5)
     turtle2.end_fill()
 
-heart1 = turtle.Turtle(visible=False)
-heart_builder(heart1, -450, 280)
-heart2 = turtle.Turtle(visible=False)
-heart_builder(heart2, -400, 280)
-heart3 = turtle.Turtle(visible=False)
-heart_builder(heart3, -350, 280)
-heart4 = turtle.Turtle(visible=False)
-heart_builder(heart4, 490, 280)
-heart5 = turtle.Turtle(visible=False)
-heart_builder(heart5, 440, 280)
-heart6 = turtle.Turtle(visible=False)
-heart_builder(heart6, 390, 280)
+hearts = [turtle.Turtle(visible=False), turtle.Turtle(visible=False), turtle.Turtle(visible=False), turtle.Turtle(visible=False), turtle.Turtle(visible=False), turtle.Turtle(visible=False)]
+heart_builder(hearts[0], -450, 280)
+heart_builder(hearts[1], -400, 280)
+heart_builder(hearts[2], -350, 280)
+heart_builder(hearts[3], 490, 280)
+heart_builder(hearts[4], 440, 280)
+heart_builder(hearts[5], 390, 280)
 # endregion
 # region winner text
 FONT = ("Arial", 44)
@@ -89,7 +83,6 @@ winner.setposition(-250, 0)
 winner.write(blocks[11], font=FONT)
 winner.clear()
 # endregion
-
 # region button func
 def move_up_left():
     y = blocks[9].ycor()
@@ -118,11 +111,16 @@ def move_down_right():
 def clear():
     for j in range(len(blocks)):
         blocks[i].color("gray")
+
+def ballReset(n, x, y):
+    blocks[n].goto(x, y)
+    blocks[n].dx = choice([-4, -3, -2, 2, 3, 4])
+    blocks[n].dy = choice([-4, -3, -2, 2, 3, 4])
 # endregion
 # region blocks
 def blockBuilder(num, color, x, y, shape, gx, gy, check):
     blocks[num].color(color)
-    blocks[num].speed(0)
+    blocks[num].speed(10)
     blocks[num].shape(shape)
     if check:
         blocks[num].shapesize(x, y)
@@ -158,8 +156,8 @@ while True:
     blocks[8].setx(blocks[8].xcor() + blocks[8].dx)
     blocks[8].sety(blocks[8].ycor() + blocks[8].dy)
     # region ball
-    if blocks[8].ycor() + 20 >= blocks[7].ycor() >= blocks[8].ycor() - 20 and blocks[8].xcor() + 20 >= blocks[
-        7].xcor() >= blocks[8].xcor() - 20:
+    if blocks[8].ycor() + 20 >= blocks[7].ycor() >= blocks[8].ycor() - 20 and blocks[8].xcor() + 20 >= \
+            blocks[7].xcor() >= blocks[8].xcor() - 20:
         if checkers[1]:
             blocks[7].dx = -blocks[7].dx
             checkers[1] = False
@@ -173,37 +171,34 @@ while True:
         checkers[1] = True
         blocks[12] -= -1
         if blocks[12] == 1:
-            heart6.clear()
+            hearts[5].clear()
         elif blocks[12] == 2:
-            heart5.clear()
+            hearts[4].clear()
         elif blocks[12] == 3:
-            heart4.clear()
+            hearts[3].clear()
             clear()
             winner.penup()
             winner.goto(-500, 0)
             winner.write("player left win", font=FONT)
-        blocks[7].goto(0, 0)
-        blocks[7].dx = choice([-4, -3, -2, 2, 3, 4])
-        blocks[7].dy = choice([-4, -3, -2, 2, 3, 4])
+        ballReset(7, 0, 0)
     if blocks[7].xcor() <= -490:
         checkers[1] = True
         blocks[11] -= -1
         if blocks[11] == 1:
-            heart3.clear()
+            hearts[2].clear()
         elif blocks[11] == 2:
-            heart2.clear()
+            hearts[1].clear()
         elif blocks[11] == 3:
-            heart1.clear()
+            hearts[0].clear()
             clear()
             winner.penup()
             winner.goto(0, 0)
             winner.write("player right win", font=FONT)
-        blocks[7].goto(0, 0)
-        blocks[7].dx = choice([-4, -3, -2, 2, 3, 4])
-        blocks[7].dy = choice([-4, -3, -2, 2, 3, 4])
+        ballReset(7, 0, 0)
     # endregion
     # region ball2
-    if blocks[7].ycor() + 20 >= blocks[8].ycor() >= blocks[7].ycor() - 20 and blocks[7].xcor() + 20 >= blocks[8].xcor() >= blocks[7].xcor() - 20:
+    if blocks[7].ycor() + 20 >= blocks[8].ycor() >= blocks[7].ycor() - 20 and blocks[7].xcor() + 20 >= \
+            blocks[8].xcor() >= blocks[7].xcor() - 20:
         if checkers[2]:
             blocks[8].dx = -blocks[8].dx
             checkers[2] = False
@@ -217,30 +212,26 @@ while True:
         checkers[2] = True
         blocks[12] -= -1
         if blocks[12] == 1:
-            heart6.clear()
+            hearts[5].clear()
         elif blocks[12] == 2:
-            heart5.clear()
+            hearts[4].clear()
         elif blocks[12] == 3:
-            heart4.clear()
+            hearts[3].clear()
             clear()
             winner.write("player left win", font=FONT)
-        blocks[8].goto(0, 0)
-        blocks[8].dx = choice([-4, -3, -2, 2, 3, 4])
-        blocks[8].dy = choice([-4, -3, -2, 2, 3, 4])
+        ballReset(8, 0, 0)
     if blocks[8].xcor() <= -490:
         checkers[2] = True
         blocks[11] -= -1
         if blocks[11] == 1:
-            heart3.clear()
+            hearts[2].clear()
         elif blocks[11] == 2:
-            heart2.clear()
+            hearts[1].clear()
         elif blocks[11] == 3:
-            heart1.clear()
+            hearts[0].clear()
             clear()
             winner.write("player right win", font=FONT)
-        blocks[8].goto(0, 0)
-        blocks[8].dx = choice([-4, -3, -2, 2, 3, 4])
-        blocks[8].dy = choice([-4, -3, -2, 2, 3, 4])
+        ballReset(8, 0, 0)
     # endregion
     # region beat off
     if blocks[10].ycor() - 60 <= blocks[7].ycor() <= blocks[10].ycor() + 60 \
@@ -257,7 +248,7 @@ while True:
         blocks[8].dx = -blocks[8].dx
     # endregion
     # region hp
-    for i in range(len(HP) - 1):
+    for i in range(len(HP)):
         if destroys[i]:
             if i < 2:
                 if blocks[i].ycor() - 120 <= blocks[8].ycor() <= blocks[i].ycor() + 120 \
@@ -278,15 +269,15 @@ while True:
                     blocks[7].dx = -blocks[7].dx
                     HP[i] += -1
             else:
-                if blocks[i].ycor() - 60 <= blocks[8].ycor() <= blocks[i].ycor() + 60 \
+                if blocks[i].ycor() - 57 <= blocks[8].ycor() <= blocks[i].ycor() + 57 \
                         and blocks[i].xcor() - 35 <= blocks[8].xcor() <= blocks[i].xcor() + 35:
                     blocks[8].dx = -blocks[8].dx
                     HP[i] += -1
-                if blocks[i].ycor() - 60 <= blocks[7].ycor() <= blocks[i].ycor() + 60 \
+                if blocks[i].ycor() - 57 <= blocks[7].ycor() <= blocks[i].ycor() + 57 \
                         and blocks[i].xcor() - 35 <= blocks[7].xcor() <= blocks[i].xcor() + 35:
                     blocks[7].dx = -blocks[7].dx
                     HP[i] += -1
-    for i in range(len(HP) - 1):
+    for i in range(len(HP)):
         if destroys[i]:
             if HP[i] == 0:
                 blocks[i].reset()
