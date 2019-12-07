@@ -5,6 +5,7 @@ blocks = [turtle.Turtle(), turtle.Turtle(), turtle.Turtle(), turtle.Turtle(), tu
           turtle.Turtle(), turtle.Turtle(), turtle.Turtle(), turtle.Turtle(), turtle.Turtle(), 0, 0]
 HP = [3, 3, 3, 3, 3, 3, 3]
 destroys = [True, True, True, True, True, True, True, True]
+collision = [True, True, True, True, True, True, True, True]
 checkers = [False, True, True, False]
 # endregion
 # region window
@@ -163,6 +164,11 @@ def blockBuilder(num, color, x, y, shape, gx, gy, check):
         blocks[num].dy = choice([-4, -3, -2, 2, 3, 4])
     blocks[num].penup()
     blocks[num].goto(gx, gy)
+
+def blockCollision(i):
+    for a in range(len(collision)):
+        if a != i:
+            collision[a] = True
 # endregion
 # region blocks
 blockBuilder(0, "white", 10, 5, "square", 0, 200, True)
