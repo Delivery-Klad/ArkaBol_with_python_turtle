@@ -1,4 +1,5 @@
 import turtle
+import threading
 from random import choice
 # region blocks
 blocks = [turtle.Turtle(), turtle.Turtle(), turtle.Turtle(), turtle.Turtle(), turtle.Turtle(), turtle.Turtle(),
@@ -14,17 +15,19 @@ game.title("ArkaBol")
 game.setup(width=1.0, height=1.0)
 game.bgcolor("black")
 game.tracer(1)
-
 zone = turtle.Turtle()
-zone.speed(0)
-zone.color("gray")
-zone.begin_fill()
-zone.goto(-500, 300)
-zone.goto(500, 300)
-zone.goto(500, -300)
-zone.goto(-500, -300)
-zone.goto(-500, 300)
-zone.end_fill()
+
+
+def zoneCreator():
+    zone.speed(0)
+    zone.color("gray")
+    zone.begin_fill()
+    zone.goto(-500, 300)
+    zone.goto(500, 300)
+    zone.goto(500, -300)
+    zone.goto(-500, -300)
+    zone.goto(-500, 300)
+    zone.end_fill()
 # endregion
 # region hearts
 def heart_builder(turtle2, x, y):
@@ -69,12 +72,6 @@ def heart_builder(turtle2, x, y):
 
 hearts = [turtle.Turtle(visible=False), turtle.Turtle(visible=False), turtle.Turtle(visible=False),
           turtle.Turtle(visible=False), turtle.Turtle(visible=False), turtle.Turtle(visible=False)]
-heart_builder(hearts[0], -450, 280)
-heart_builder(hearts[1], -400, 280)
-heart_builder(hearts[2], -350, 280)
-heart_builder(hearts[3], 490, 280)
-heart_builder(hearts[4], 440, 280)
-heart_builder(hearts[5], 390, 280)
 # endregion
 # region winner text
 FONT = ("Arial", 44)
@@ -86,37 +83,52 @@ winner.write(blocks[11], font=FONT)
 winner.clear()
 # endregion
 # region functions
+
+
 def move_up_left():
     y = blocks[9].ycor()
     if y > 240:
         y = 240
     blocks[9].sety(y + 10)
+
+
 def move_down_left():
     y = blocks[9].ycor()
     if y < -240:
         y = -240
     blocks[9].sety(y - 10)
+
+
 def move_up_right():
     y = blocks[10].ycor()
     if y > 240:
         y = 240
     blocks[10].sety(y + 10)
+
+
 def move_down_right():
     y = blocks[10].ycor()
     if y < -240:
         y = -240
     blocks[10].sety(y - 10)
+
+
 def clear():
     for j in range(len(blocks)):
         blocks[i].color("gray")
+
+
 def ballReset(n, x, y):
     blocks[n].goto(x, y)
     blocks[n].dx = choice([-4, -3, -2, 2, 3, 4])
     blocks[n].dy = choice([-4, -3, -2, 2, 3, 4])
+
+
 def showWinner(x, y, text):
     winner.penup()
     winner.goto(x, y)
     winner.write(text, font=FONT)
+
 
 def wallsCollision(num, trigger, checker, cor, ballId, reset):
     if cor == "y":
@@ -153,6 +165,7 @@ def wallsCollision(num, trigger, checker, cor, ballId, reset):
             if reset:
                 ballReset(ballId, 0, 0)
 
+
 def blockBuilder(num, color, x, y, shape, gx, gy, check):
     blocks[num].color(color)
     blocks[num].speed(10)
@@ -165,23 +178,45 @@ def blockBuilder(num, color, x, y, shape, gx, gy, check):
     blocks[num].penup()
     blocks[num].goto(gx, gy)
 
+
 def blockCollision(i):
     for a in range(len(collision)):
         if a != i:
             collision[a] = True
 # endregion
+
+
 # region blocks
-blockBuilder(0, "white", 10, 5, "square", 0, 200, True)
-blockBuilder(1, "white", 10, 5, "square", 0, -200, True)
-blockBuilder(2, "white", 5, 10, "square", 0, 0, True)
-blockBuilder(3, "white", 4, 2, "square", 150, 60, True)
-blockBuilder(4, "white", 4, 2, "square", -150, 60, True)
-blockBuilder(5, "white", 4, 2, "square", -150, -60, True)
-blockBuilder(6, "white", 4, 2, "square", 150, -60, True)
-blockBuilder(7, "red", 0, 0, "circle", -400, 0, False)
-blockBuilder(8, "black", 0, 0, "circle", 400, 0, False)
-blockBuilder(9, "white", 5, 1, "square", -450, 0, True)
-blockBuilder(10, "white", 5, 1, "square", 450, 0, True)
+t1 = threading.Thread(target=zoneCreator(), name='zone')
+t2 = threading.Thread(target=heart_builder(hearts[0], -450, 280), name='heart1')
+t3 = threading.Thread(target=heart_builder(hearts[1], -400, 280), name='heart2')
+t4 = threading.Thread(target=heart_builder(hearts[2], -350, 280), name='heart3')
+t5 = threading.Thread(target=heart_builder(hearts[3], 490, 280), name='heart4')
+t6 = threading.Thread(target=heart_builder(hearts[4], 440, 280), name='heart5')
+t7 = threading.Thread(target=heart_builder(hearts[5], 390, 280), name='heart6')
+
+t8 = threading.Thread(target=blockBuilder(0, "white", 10, 5, "square", 0, 200, True), name='block1')
+t9 = threading.Thread(target=blockBuilder(1, "white", 10, 5, "square", 0, -200, True), name='block2')
+t10 = threading.Thread(target=blockBuilder(2, "white", 5, 10, "square", 0, 0, True), name='block3')
+t11 = threading.Thread(target=blockBuilder(3, "white", 4, 2, "square", 150, 60, True), name='block4')
+t12 = threading.Thread(target=blockBuilder(4, "white", 4, 2, "square", -150, 60, True), name='block5')
+t13 = threading.Thread(target=blockBuilder(5, "white", 4, 2, "square", -150, -60, True), name='block6')
+t14 = threading.Thread(target=blockBuilder(6, "white", 4, 2, "square", 150, -60, True), name='block7')
+t15 = threading.Thread(target=blockBuilder(7, "red", 0, 0, "circle", -400, 0, False), name='block8')
+t16 = threading.Thread(target=blockBuilder(8, "black", 0, 0, "circle", 400, 0, False), name='block9')
+t17 = threading.Thread(target=blockBuilder(9, "white", 5, 1, "square", -450, 0, True), name='block10')
+t18 = threading.Thread(target=blockBuilder(10, "white", 5, 1, "square", 450, 0, True), name='block11')
+
+thread1_list = [t1, t2, t3, t4, t5, t6, t7]
+for t in thread1_list:
+    t.start()
+for t in thread1_list:
+    t.join()
+thread2_list = [t8, t9, t10, t11, t12, t13, t14, t15, t16, t17]
+for t in thread2_list:
+    t.start()
+for t in thread2_list:
+    t.join()
 # endregion
 # region buttons
 game.listen()
