@@ -1,3 +1,4 @@
+import time
 import turtle
 import threading
 from random import choice
@@ -31,6 +32,7 @@ def zoneCreator():
 # endregion
 # region hearts
 def heart_builder(turtle2, x, y):
+    print('start')
     turtle2.speed(0)
     turtle2.color("red")
     turtle2.penup()
@@ -115,7 +117,7 @@ def move_down_right():
 
 def clear():
     for j in range(len(blocks)):
-        blocks[i].color("gray")
+        blocks[j].color("gray")
 
 
 def ballReset(n, x, y):
@@ -186,37 +188,41 @@ def blockCollision(i):
 # endregion
 
 
-# region blocks
 t1 = threading.Thread(target=zoneCreator(), name='zone')
-t2 = threading.Thread(target=heart_builder(hearts[0], -450, 280), name='heart1')
-t3 = threading.Thread(target=heart_builder(hearts[1], -400, 280), name='heart2')
-t4 = threading.Thread(target=heart_builder(hearts[2], -350, 280), name='heart3')
-t5 = threading.Thread(target=heart_builder(hearts[3], 490, 280), name='heart4')
-t6 = threading.Thread(target=heart_builder(hearts[4], 440, 280), name='heart5')
-t7 = threading.Thread(target=heart_builder(hearts[5], 390, 280), name='heart6')
-
-t8 = threading.Thread(target=blockBuilder(0, "white", 10, 5, "square", 0, 200, True), name='block1')
-t9 = threading.Thread(target=blockBuilder(1, "white", 10, 5, "square", 0, -200, True), name='block2')
-t10 = threading.Thread(target=blockBuilder(2, "white", 5, 10, "square", 0, 0, True), name='block3')
-t11 = threading.Thread(target=blockBuilder(3, "white", 4, 2, "square", 150, 60, True), name='block4')
-t12 = threading.Thread(target=blockBuilder(4, "white", 4, 2, "square", -150, 60, True), name='block5')
-t13 = threading.Thread(target=blockBuilder(5, "white", 4, 2, "square", -150, -60, True), name='block6')
-t14 = threading.Thread(target=blockBuilder(6, "white", 4, 2, "square", 150, -60, True), name='block7')
-t15 = threading.Thread(target=blockBuilder(7, "red", 0, 0, "circle", -400, 0, False), name='block8')
-t16 = threading.Thread(target=blockBuilder(8, "black", 0, 0, "circle", 400, 0, False), name='block9')
-t17 = threading.Thread(target=blockBuilder(9, "white", 5, 1, "square", -450, 0, True), name='block10')
-t18 = threading.Thread(target=blockBuilder(10, "white", 5, 1, "square", 450, 0, True), name='block11')
-
+t2 = threading.Thread(target=heart_builder, name='heart1', args=(hearts[0], -450, 280))
+t3 = threading.Thread(target=heart_builder, name='heart2', args=(hearts[1], -400, 280))
+t4 = threading.Thread(target=heart_builder, name='heart3', args=(hearts[2], -350, 280))
+t5 = threading.Thread(target=heart_builder, name='heart4', args=(hearts[3], 490, 280))
+t6 = threading.Thread(target=heart_builder, name='heart5', args=(hearts[4], 440, 280))
+t7 = threading.Thread(target=heart_builder, name='heart6', args=(hearts[5], 390, 280))
 thread1_list = [t1, t2, t3, t4, t5, t6, t7]
-for t in thread1_list:
-    t.start()
-for t in thread1_list:
-    t.join()
-thread2_list = [t8, t9, t10, t11, t12, t13, t14, t15, t16, t17]
-for t in thread2_list:
-    t.start()
-for t in thread2_list:
-    t.join()
+# region threads
+t8 = threading.Thread(target=blockBuilder, name='block1', args=(0, "white", 10, 5, "square", 0, 200, True))
+t9 = threading.Thread(target=blockBuilder, name='block2', args=(1, "white", 10, 5, "square", 0, -200, True))
+t10 = threading.Thread(target=blockBuilder, name='block3', args=(2, "white", 5, 10, "square", 0, 0, True))
+t11 = threading.Thread(target=blockBuilder, name='block4', args=(3, "white", 4, 2, "square", 150, 60, True))
+t12 = threading.Thread(target=blockBuilder, name='block5', args=(4, "white", 4, 2, "square", -150, 60, True))
+t13 = threading.Thread(target=blockBuilder, name='block6', args=(5, "white", 4, 2, "square", -150, -60, True))
+t14 = threading.Thread(target=blockBuilder, name='block7', args=(6, "white", 4, 2, "square", 150, -60, True))
+t15 = threading.Thread(target=blockBuilder, name='block8', args=(7, "red", 0, 0, "circle", -400, 0, False))
+t16 = threading.Thread(target=blockBuilder, name='block9', args=(8, "black", 0, 0, "circle", 400, 0, False))
+t17 = threading.Thread(target=blockBuilder, name='block10', args=(9, "white", 5, 1, "square", -450, 0, True))
+t18 = threading.Thread(target=blockBuilder, name='block11', args=(10, "white", 5, 1, "square", 450, 0, True))
+thread2_list = [t8, t9, t10, t11, t12, t13, t14, t15, t16, t17, t18]
+
+
+def heartThreads():
+    for thread in thread1_list:
+        thread.start()
+
+
+def blockThreads():
+    for thread in thread2_list:
+        thread.start()
+
+
+heartThreads()
+blockThreads()
 # endregion
 # region buttons
 game.listen()
@@ -225,84 +231,94 @@ game.onkeypress(move_down_left, "s")
 game.onkeypress(move_up_right, "Up")
 game.onkeypress(move_down_right, "Down")
 # endregion
-while True:
-    game.update()
-    if not checkers[3]:
-        blocks[7].setx(blocks[7].xcor() + blocks[7].dx)
-        blocks[7].sety(blocks[7].ycor() + blocks[7].dy)
-        blocks[8].setx(blocks[8].xcor() + blocks[8].dx)
-        blocks[8].sety(blocks[8].ycor() + blocks[8].dy)
-        # region balls
-        if blocks[8].ycor() + 20 >= blocks[7].ycor() >= blocks[8].ycor() - 20 and blocks[8].xcor() + 20 >= \
-                blocks[7].xcor() >= blocks[8].xcor() - 20:
-            if checkers[1]:
-                blocks[7].dx = -blocks[7].dx
-                checkers[1] = False
 
-        if blocks[7].ycor() + 20 >= blocks[8].ycor() >= blocks[7].ycor() - 20 and blocks[7].xcor() + 20 >= \
-                blocks[8].xcor() >= blocks[7].xcor() - 20:
-            if checkers[2]:
+
+def mainThread():
+    time.sleep(4)
+    while True:
+        game.update()
+        if not checkers[3]:
+            blocks[7].setx(blocks[7].xcor() + blocks[7].dx)
+            blocks[7].sety(blocks[7].ycor() + blocks[7].dy)
+            blocks[8].setx(blocks[8].xcor() + blocks[8].dx)
+            blocks[8].sety(blocks[8].ycor() + blocks[8].dy)
+            # region balls
+            if blocks[8].ycor() + 20 >= blocks[7].ycor() >= blocks[8].ycor() - 20 and blocks[8].xcor() + 20 >= \
+                    blocks[7].xcor() >= blocks[8].xcor() - 20:
+                if checkers[1]:
+                    blocks[7].dx = -blocks[7].dx
+                    checkers[1] = False
+
+            if blocks[7].ycor() + 20 >= blocks[8].ycor() >= blocks[7].ycor() - 20 and blocks[7].xcor() + 20 >= \
+                    blocks[8].xcor() >= blocks[7].xcor() - 20:
+                if checkers[2]:
+                    blocks[8].dx = -blocks[8].dx
+                    checkers[2] = False
+            wallsCollision(7, 290, 1, "y", 7, False)
+            wallsCollision(7, 490, 1, "x", 7, True)
+            wallsCollision(7, 490, 1, "x", 7, True)
+            wallsCollision(8, 290, 2, "y", 8, False)
+            wallsCollision(8, 490, 2, "x", 8, True)
+            wallsCollision(8, 490, 2, "x", 8, True)
+            # endregion
+            # region beat off
+            if blocks[10].ycor() - 60 <= blocks[7].ycor() <= blocks[10].ycor() + 60 \
+                    and blocks[10].xcor() - 20 <= blocks[7].xcor() <= blocks[10].xcor() + 20:
+                blocks[7].dx = -blocks[7].dx
+            if blocks[9].ycor() - 60 <= blocks[7].ycor() <= blocks[9].ycor() + 60 \
+                    and blocks[9].xcor() - 20 <= blocks[7].xcor() <= blocks[9].xcor() + 20:
+                blocks[7].dx = -blocks[7].dx
+            if blocks[10].ycor() - 50 <= blocks[8].ycor() <= blocks[10].ycor() + 50 \
+                    and blocks[10].xcor() - 20 <= blocks[8].xcor() <= blocks[10].xcor() + 20:
                 blocks[8].dx = -blocks[8].dx
-                checkers[2] = False
-        wallsCollision(7, 290, 1, "y", 7, False)
-        wallsCollision(7, 490, 1, "x", 7, True)
-        wallsCollision(7, 490, 1, "x", 7, True)
-        wallsCollision(8, 290, 2, "y", 8, False)
-        wallsCollision(8, 490, 2, "x", 8, True)
-        wallsCollision(8, 490, 2, "x", 8, True)
-        # endregion
-        # region beat off
-        if blocks[10].ycor() - 60 <= blocks[7].ycor() <= blocks[10].ycor() + 60 \
-                and blocks[10].xcor() - 20 <= blocks[7].xcor() <= blocks[10].xcor() + 20:
-            blocks[7].dx = -blocks[7].dx
-        if blocks[9].ycor() - 60 <= blocks[7].ycor() <= blocks[9].ycor() + 60 \
-                and blocks[9].xcor() - 20 <= blocks[7].xcor() <= blocks[9].xcor() + 20:
-            blocks[7].dx = -blocks[7].dx
-        if blocks[10].ycor() - 50 <= blocks[8].ycor() <= blocks[10].ycor() + 50 \
-                and blocks[10].xcor() - 20 <= blocks[8].xcor() <= blocks[10].xcor() + 20:
-            blocks[8].dx = -blocks[8].dx
-        if blocks[9].ycor() - 50 <= blocks[8].ycor() <= blocks[9].ycor() + 50 \
-                and blocks[9].xcor() - 20 <= blocks[8].xcor() <= blocks[9].xcor() + 20:
-            blocks[8].dx = -blocks[8].dx
-        # endregion
-        # region hp
-        for i in range(len(HP)):
-            if destroys[i]:
-                if i < 2:
-                    if blocks[i].ycor() - 120 <= blocks[8].ycor() <= blocks[i].ycor() + 120 \
-                            and blocks[i].xcor() - 60 <= blocks[8].xcor() <= blocks[i].xcor() + 60:
-                        blocks[8].dx = -blocks[8].dx
-                        HP[i] += -1
-                    if blocks[i].ycor() - 120 <= blocks[7].ycor() <= blocks[i].ycor() + 120 \
-                            and blocks[i].xcor() - 60 <= blocks[7].xcor() <= blocks[i].xcor() + 60:
-                        blocks[7].dx = -blocks[7].dx
-                        HP[i] += -1
-                elif i == 2:
-                    if blocks[i].ycor() - 60 <= blocks[8].ycor() <= blocks[i].ycor() + 60 \
-                            and blocks[i].xcor() - 120 <= blocks[8].xcor() <= blocks[i].xcor() + 120:
-                        blocks[8].dx = -blocks[8].dx
-                        HP[i] += -1
-                    if blocks[i].ycor() - 60 <= blocks[7].ycor() <= blocks[i].ycor() + 60 \
-                            and blocks[i].xcor() - 120 <= blocks[7].xcor() <= blocks[i].xcor() + 120:
-                        blocks[7].dx = -blocks[7].dx
-                        HP[i] += -1
-                else:
-                    if blocks[i].ycor() - 57 <= blocks[8].ycor() <= blocks[i].ycor() + 57 \
-                            and blocks[i].xcor() - 35 <= blocks[8].xcor() <= blocks[i].xcor() + 35:
-                        blocks[8].dx = -blocks[8].dx
-                        HP[i] += -1
-                    if blocks[i].ycor() - 57 <= blocks[7].ycor() <= blocks[i].ycor() + 57 \
-                            and blocks[i].xcor() - 35 <= blocks[7].xcor() <= blocks[i].xcor() + 35:
-                        blocks[7].dx = -blocks[7].dx
-                        HP[i] += -1
-        for i in range(len(HP)):
-            if destroys[i]:
-                if HP[i] == 0:
-                    blocks[i].reset()
-                    destroys[i] = False
-                    blocks[i].speed(0)
-                    blocks[i].penup()
-                    blocks[i].goto(0, 350)
-        # endregion
-        if HP[0] == 0 and HP[1] == 0 and HP[2] == 3 and HP[3] == 0 and HP[4] == 0 and HP[5] == 0 and HP[6] == 0:
-            checkers[0] = True
+            if blocks[9].ycor() - 50 <= blocks[8].ycor() <= blocks[9].ycor() + 50 \
+                    and blocks[9].xcor() - 20 <= blocks[8].xcor() <= blocks[9].xcor() + 20:
+                blocks[8].dx = -blocks[8].dx
+            # endregion
+            # region hp
+            for i in range(len(HP)):
+                if destroys[i]:
+                    if i < 2:
+                        if blocks[i].ycor() - 120 <= blocks[8].ycor() <= blocks[i].ycor() + 120 \
+                                and blocks[i].xcor() - 60 <= blocks[8].xcor() <= blocks[i].xcor() + 60:
+                            blocks[8].dx = -blocks[8].dx
+                            HP[i] += -1
+                        if blocks[i].ycor() - 120 <= blocks[7].ycor() <= blocks[i].ycor() + 120 \
+                                and blocks[i].xcor() - 60 <= blocks[7].xcor() <= blocks[i].xcor() + 60:
+                            blocks[7].dx = -blocks[7].dx
+                            HP[i] += -1
+                    elif i == 2:
+                        if blocks[i].ycor() - 60 <= blocks[8].ycor() <= blocks[i].ycor() + 60 \
+                                and blocks[i].xcor() - 120 <= blocks[8].xcor() <= blocks[i].xcor() + 120:
+                            blocks[8].dx = -blocks[8].dx
+                            HP[i] += -1
+                        if blocks[i].ycor() - 60 <= blocks[7].ycor() <= blocks[i].ycor() + 60 \
+                                and blocks[i].xcor() - 120 <= blocks[7].xcor() <= blocks[i].xcor() + 120:
+                            blocks[7].dx = -blocks[7].dx
+                            HP[i] += -1
+                    else:
+                        if blocks[i].ycor() - 57 <= blocks[8].ycor() <= blocks[i].ycor() + 57 \
+                                and blocks[i].xcor() - 35 <= blocks[8].xcor() <= blocks[i].xcor() + 35:
+                            blocks[8].dx = -blocks[8].dx
+                            HP[i] += -1
+                        if blocks[i].ycor() - 57 <= blocks[7].ycor() <= blocks[i].ycor() + 57 \
+                                and blocks[i].xcor() - 35 <= blocks[7].xcor() <= blocks[i].xcor() + 35:
+                            blocks[7].dx = -blocks[7].dx
+                            HP[i] += -1
+            for i in range(len(HP)):
+                if destroys[i]:
+                    if HP[i] == 0:
+                        blocks[i].reset()
+                        destroys[i] = False
+                        blocks[i].speed(0)
+                        blocks[i].penup()
+                        blocks[i].goto(0, 350)
+            # endregion
+            if HP[0] == 0 and HP[1] == 0 and HP[2] == 3 and HP[3] == 0 and HP[4] == 0 and HP[5] == 0 and HP[6] == 0:
+                checkers[0] = True
+
+
+if __name__ == "__main__":
+    mainTh = threading.Thread(target=mainThread)
+    mainTh.start()
+    game.mainloop()
