@@ -226,10 +226,10 @@ blockThreads()
 # endregion
 # region buttons
 game.listen()
-game.onkeypress(move_up_left, "w")
-game.onkeypress(move_down_left, "s")
-game.onkeypress(move_up_right, "Up")
-game.onkeypress(move_down_right, "Down")
+game.onkey(move_up_left, "w")
+game.onkey(move_down_left, "s")
+game.onkey(move_up_right, "Up")
+game.onkey(move_down_right, "Down")
 # endregion
 
 
