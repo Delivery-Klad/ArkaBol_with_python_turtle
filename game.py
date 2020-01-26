@@ -30,9 +30,10 @@ def zoneCreator():
     zone.goto(-500, 300)
     zone.end_fill()
 # endregion
+
+
 # region hearts
 def heart_builder(turtle2, x, y):
-    print('start')
     turtle2.speed(0)
     turtle2.color("red")
     turtle2.penup()
@@ -71,6 +72,7 @@ def heart_builder(turtle2, x, y):
     turtle2.goto(x + 5, y - 5)
     turtle2.goto(x, y - 5)
     turtle2.end_fill()
+
 
 hearts = [turtle.Turtle(visible=False), turtle.Turtle(visible=False), turtle.Turtle(visible=False),
           turtle.Turtle(visible=False), turtle.Turtle(visible=False), turtle.Turtle(visible=False)]
@@ -188,6 +190,7 @@ def blockCollision(i):
 # endregion
 
 
+# region threads
 t1 = threading.Thread(target=zoneCreator(), name='zone')
 t2 = threading.Thread(target=heart_builder, name='heart1', args=(hearts[0], -450, 280))
 t3 = threading.Thread(target=heart_builder, name='heart2', args=(hearts[1], -400, 280))
@@ -196,7 +199,6 @@ t5 = threading.Thread(target=heart_builder, name='heart4', args=(hearts[3], 490,
 t6 = threading.Thread(target=heart_builder, name='heart5', args=(hearts[4], 440, 280))
 t7 = threading.Thread(target=heart_builder, name='heart6', args=(hearts[5], 390, 280))
 thread1_list = [t1, t2, t3, t4, t5, t6, t7]
-# region threads
 t8 = threading.Thread(target=blockBuilder, name='block1', args=(0, "white", 10, 5, "square", 0, 200, True))
 t9 = threading.Thread(target=blockBuilder, name='block2', args=(1, "white", 10, 5, "square", 0, -200, True))
 t10 = threading.Thread(target=blockBuilder, name='block3', args=(2, "white", 5, 10, "square", 0, 0, True))
